@@ -61,18 +61,19 @@ const Item = ({ item, index, moveItem, status }) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-
       moveItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
   });
 
-  const [, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     item: { type: itemType, ...item, index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
+
+  const opacity = isDragging ? 0 : 1;
 
   const [show, setShow] = useState(false);
   const onOpen = () => setShow(true);
@@ -82,7 +83,7 @@ const Item = ({ item, index, moveItem, status }) => {
 
   return (
     <>
-      <ItemCtn ref={ref} onClick={onOpen}>
+      <ItemCtn ref={ref} style={{ opacity }} onClick={onOpen}>
         <ColorBar style={{ backgroundColor: status.color }} />
         <ItemTitle>{item.content}</ItemTitle>
         <ItemIcon>{item.icon}</ItemIcon>

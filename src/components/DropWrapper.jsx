@@ -13,7 +13,7 @@ const DropWrapperCtn = styled.div`
 const DropWrapper = ({ onDrop, children, status }) => {
   const [{ isOver }, drop] = useDrop({
     accept: itemType,
-    canDrop: (item, monitor) => {
+    canDrop: (item) => {
       const itemIndex = statuses.findIndex((si) => si.status === item.status);
       const statusIndex = statuses.findIndex((si) => si.status === status);
       return [itemIndex + 1, itemIndex - 1, itemIndex].includes(statusIndex);

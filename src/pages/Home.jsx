@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import update from "immutability-helper";
 import Item from "../components/Item";
 import DropWrapper from "../components/DropWrapper";
 import Col from "../components/Col";
@@ -33,26 +34,36 @@ const ColHeader = styled.h2`
 
 const Home = () => {
   const [items, setItems] = useState(data);
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
 
-  const onDrop = (item, monitor, status) => {
+  const onDrop = (item, _, status) => {
     const mapping = statuses.find((si) => si.status === status);
 
-    setItems((prevState) => {
-      const newItems = prevState
-        .filter((i) => i.id !== item.id)
-        .concat({ ...item, status, icon: mapping.icon });
-      return [...newItems];
-    });
+    if (item.status !== status)
+      setItems((prevState) => {
+        const newItems = prevState
+          .filter((i) => i.id !== item.id)
+          .concat({ ...item, status, icon: mapping.icon }); //dont use concat maybe
+        return [...newItems];
+      });
   };
 
-  const moveItem = (dragIndex, hoverIndex) => {
-    const item = items[dragIndex];
-    setItems((prevState) => {
-      const newItems = prevState.filter((_, idx) => idx !== dragIndex);
-      newItems.splice(hoverIndex, 0, item);
-      return [...newItems];
-    });
-  };
+  const moveItem = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragItem = items[dragIndex];
+      setItems(
+        update(items, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragItem],
+          ],
+        })
+      );
+    },
+    [items]
+  );
 
   return (
     <Row>
