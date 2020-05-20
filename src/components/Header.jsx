@@ -8,8 +8,7 @@ const Row = styled.div`
 `;
 
 const HeaderTitle = styled.p`
-  background-color: #054f7c;
-  padding: 20px;
+  background-color: #323232;
   color: white;
   font-size: 30px;
   flex: 1 100%;
