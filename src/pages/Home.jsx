@@ -48,7 +48,7 @@ const Home = () => {
   const moveItem = (dragIndex, hoverIndex) => {
     const item = items[dragIndex];
     setItems((prevState) => {
-      const newItems = prevState.filter((i, idx) => idx !== dragIndex);
+      const newItems = prevState.filter((_, idx) => idx !== dragIndex);
       newItems.splice(hoverIndex, 0, item);
       return [...newItems];
     });

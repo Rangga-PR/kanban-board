@@ -61,6 +61,7 @@ const Item = ({ item, index, moveItem, status }) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
+
       moveItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
