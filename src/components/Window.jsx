@@ -14,7 +14,11 @@ const CloseBtn = styled.button`
   font-size: 20px;
   color: #031d2c;
   border: none;
-  border-radius: 25px;
+  background-color: transparent;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ItemTitle = styled.h1`
@@ -31,7 +35,9 @@ const Window = ({ show, onClose, item }) => {
     >
       <CloseBtnCtn>
         <ItemTitle>{item.title}</ItemTitle>
-        <CloseBtn onClick={onClose}>X</CloseBtn>
+        <CloseBtn onClick={onClose}>
+          <i className="material-icons">close</i>
+        </CloseBtn>
       </CloseBtnCtn>
       <div>
         <h2>Description</h2>

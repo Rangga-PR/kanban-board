@@ -13,6 +13,7 @@ const HeaderTitle = styled.p`
   font-size: 30px;
   flex: 1 100%;
   margin-top: 0;
+  margin-bottom: 5px;
   text-align: center;
 `;
 
