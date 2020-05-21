@@ -31,9 +31,19 @@ const ItemTitle = styled.p`
 
 const ItemIcon = styled.p`
   text-align: right;
+  margin: 0 3px 0 0;
 `;
 
-const Item = ({ item, index, moveItem, status }) => {
+const ItemMenu = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const MenuIcon = styled.i`
+  margin-left: 8px;
+`;
+
+const Item = ({ item, index, moveItem, status, onDel }) => {
   const ref = useRef(null);
 
   const [, drop] = useDrop({
@@ -81,12 +91,21 @@ const Item = ({ item, index, moveItem, status }) => {
 
   drag(drop(ref));
 
+  const handleDelete = (event) => {
+    onDel(index);
+  };
   return (
     <>
       <ItemCtn ref={ref} style={{ opacity }} onClick={onOpen}>
         <ColorBar style={{ backgroundColor: status.color }} />
         <ItemTitle>{item.content}</ItemTitle>
         <ItemIcon>{item.icon}</ItemIcon>
+        <ItemMenu>
+          <MenuIcon className="material-icons">create</MenuIcon>
+          <MenuIcon className="material-icons" onClick={handleDelete}>
+            delete
+          </MenuIcon>
+        </ItemMenu>
       </ItemCtn>
       <Window item={item} onClose={onClose} show={show} />
     </>

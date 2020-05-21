@@ -97,6 +97,14 @@ const Home = () => {
     );
   };
 
+  const deleteItem = (itemIdx) => {
+    setItems(
+      update(items, {
+        $splice: [[itemIdx, 1]],
+      })
+    );
+  };
+
   return (
     <>
       <MenuWrapper>
@@ -121,6 +129,7 @@ const Home = () => {
                         index={idx}
                         moveItem={moveItem}
                         status={s}
+                        onDel={deleteItem}
                       />
                     ))}
                 </Col>
