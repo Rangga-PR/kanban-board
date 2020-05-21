@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import Window from "./Window";
+import TaskForm from "./TaskForm";
 import itemType from "../constant";
 import styled from "styled-components";
 
@@ -43,7 +44,7 @@ const MenuIcon = styled.i`
   margin-left: 8px;
 `;
 
-const Item = ({ item, index, moveItem, status, onDel }) => {
+const Item = ({ item, index, moveItem, status, onDel, onEdit }) => {
   const ref = useRef(null);
 
   const [, drop] = useDrop({
@@ -91,9 +92,22 @@ const Item = ({ item, index, moveItem, status, onDel }) => {
 
   drag(drop(ref));
 
+  const [showEdit, setShowEdit] = useState(false);
+  const onShowEditOpen = (event) => {
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+    setShowEdit(true);
+  };
+  const onShowEditClose = () => setShowEdit(false);
+
   const handleDelete = (event) => {
     onDel(index);
   };
+
+  const handleEditedTask = (editedTask) => {
+    onEdit({ editedTask, index });
+  };
+
   return (
     <>
       <ItemCtn ref={ref} style={{ opacity }} onClick={onOpen}>
@@ -101,13 +115,21 @@ const Item = ({ item, index, moveItem, status, onDel }) => {
         <ItemTitle>{item.content}</ItemTitle>
         <ItemIcon>{item.icon}</ItemIcon>
         <ItemMenu>
-          <MenuIcon className="material-icons">create</MenuIcon>
+          <MenuIcon className="material-icons" onClick={onShowEditOpen}>
+            create
+          </MenuIcon>
           <MenuIcon className="material-icons" onClick={handleDelete}>
             delete
           </MenuIcon>
         </ItemMenu>
       </ItemCtn>
       <Window item={item} onClose={onClose} show={show} />
+      <TaskForm
+        item={item}
+        onClose={onShowEditClose}
+        show={showEdit}
+        edit={handleEditedTask}
+      />
     </>
   );
 };

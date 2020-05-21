@@ -1,35 +1,3 @@
-const data = [
-  {
-    id: 1,
-    icon: "⭕️",
-    status: "to do",
-    title: "Learn Golang",
-    content: "Create REST API with zero dependencies using go",
-  },
-  {
-    id: 2,
-    icon: "⭕️",
-    status: "to do",
-    title: "Learn Tensorflow js",
-    content:
-      "create machine learning model to classify credit card application",
-  },
-  {
-    id: 3,
-    icon: "⭕️",
-    status: "to do",
-    title: "Learn Vue3",
-    content: "use Vue 3 features like composition API in a project",
-  },
-  {
-    id: 4,
-    icon: "⭕️",
-    status: "to do",
-    title: "Push Rank",
-    content: "Push Rank to Legend",
-  },
-];
-
 const statuses = [
   {
     status: "to do",
@@ -53,4 +21,4 @@ const statuses = [
   },
 ];
 
-export { data, statuses };
+export { statuses };

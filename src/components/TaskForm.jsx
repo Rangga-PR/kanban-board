@@ -66,9 +66,9 @@ const CreateBtn = styled.button`
   }
 `;
 
-const TaskForm = ({ show, onClose, submit }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+const TaskForm = ({ show, onClose, submit, edit, item }) => {
+  const [title, setTitle] = useState(item ? item.title : "");
+  const [content, setContent] = useState(item ? item.content : "");
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -80,6 +80,12 @@ const TaskForm = ({ show, onClose, submit }) => {
 
   const handleSubmit = (event) => {
     submit({ title, content });
+    onClose();
+  };
+
+  const handleEdit = (event) => {
+    edit({ title, content });
+    onClose();
   };
 
   return (
@@ -90,7 +96,7 @@ const TaskForm = ({ show, onClose, submit }) => {
       overlayClassName={"overlay"}
     >
       <CloseBtnCtn>
-        <ItemTitle>ADD NEW TASK</ItemTitle>
+        <ItemTitle>{item ? "EDIT TASK" : "ADD NEW TASK"}</ItemTitle>
         <CloseBtn onClick={onClose}>
           <i className="material-icons">close</i>
         </CloseBtn>
@@ -106,7 +112,11 @@ const TaskForm = ({ show, onClose, submit }) => {
           value={content}
           onChange={handleContentChange}
         ></TextAreaEl>
-        <CreateBtn onClick={handleSubmit}>Create</CreateBtn>
+        {edit ? (
+          <CreateBtn onClick={handleEdit}>Edit</CreateBtn>
+        ) : (
+          <CreateBtn onClick={handleSubmit}>Create</CreateBtn>
+        )}
       </FormCtn>
     </Modal>
   );

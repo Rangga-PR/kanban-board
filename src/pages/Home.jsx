@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import update from "immutability-helper";
 import Item from "../components/Item";
 import DropWrapper from "../components/DropWrapper";
 import Col from "../components/Col";
 import TaskForm from "../components/TaskForm";
-import { data, statuses } from "../data";
+import { statuses } from "../data";
 import styled from "styled-components";
 import { colors } from "../styles/variable";
 
@@ -49,11 +49,7 @@ const ColHeader = styled.h2`
 `;
 
 const Home = () => {
-  const [items, setItems] = useState(data);
-
-  // useEffect(() => {
-  //   console.log(items);
-  // }, [items]);
+  const [items, setItems] = useState([]);
 
   const onDrop = (item, _, status) => {
     const mapping = statuses.find((si) => si.status === status);
@@ -62,7 +58,7 @@ const Home = () => {
       setItems((prevState) => {
         const newItems = prevState
           .filter((i) => i.id !== item.id)
-          .concat({ ...item, status, icon: mapping.icon }); //dont use concat maybe
+          .concat({ ...item, status, icon: mapping.icon });
         return [...newItems];
       });
   };
@@ -105,6 +101,17 @@ const Home = () => {
     );
   };
 
+  const editItem = (item) => {
+    setItems(
+      update(items, {
+        [item.index]: {
+          title: { $set: item.editedTask.title },
+          content: { $set: item.editedTask.content },
+        },
+      })
+    );
+  };
+
   return (
     <>
       <MenuWrapper>
@@ -130,6 +137,7 @@ const Home = () => {
                         moveItem={moveItem}
                         status={s}
                         onDel={deleteItem}
+                        onEdit={editItem}
                       />
                     ))}
                 </Col>
