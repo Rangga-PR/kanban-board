@@ -80,6 +80,8 @@ const TaskForm = ({ show, onClose, submit, edit, item }) => {
 
   const handleSubmit = (event) => {
     submit({ title, content });
+    setTitle("");
+    setContent("");
     onClose();
   };
 
