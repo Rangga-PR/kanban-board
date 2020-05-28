@@ -17,10 +17,12 @@ const HeaderTitle = styled.p`
   text-align: center;
 `;
 
-const Header = () => {
+const Header = ({ username }) => {
   return (
     <Row>
-      <HeaderTitle>Kanban Board 🗂</HeaderTitle>
+      <HeaderTitle>{`${
+        username && username + "'s"
+      } Kanban Board 🗂`}</HeaderTitle>
     </Row>
   );
 };
