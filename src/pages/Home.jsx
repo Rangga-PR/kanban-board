@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import update from "immutability-helper";
 import Item from "../components/Item";
@@ -74,6 +74,7 @@ const Btn = styled.button`
 
 const Home = ({ userChange }) => {
   const [items, setItems] = useState([]);
+  const [userId, setUserId] = useState(localStorage.getItem("user_id"));
 
   const getUserTasks = () => {
     axios
@@ -89,6 +90,10 @@ const Home = ({ userChange }) => {
         alert("failed to get user's task");
       });
   };
+
+  useEffect(() => {
+    if (userId !== "") getUserTasks();
+  }, [userId]);
 
   const onDrop = (item, _, status) => {
     const mapping = statuses.find((si) => si.status === status);
@@ -188,15 +193,15 @@ const Home = ({ userChange }) => {
 
   const onLoggedIn = (user) => {
     localStorage.setItem("user_id", user.id);
+    setUserId(user.id);
     getUserTasks();
     userChange(user.username);
   };
 
   const handleSignOut = () => {
     localStorage.removeItem("user_id");
-
+    setUserId("");
     userChange("");
-
     setItems([]);
   };
 
