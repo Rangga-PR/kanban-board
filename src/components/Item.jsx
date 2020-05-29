@@ -101,7 +101,7 @@ const Item = ({ item, index, moveItem, status, onDel, onEdit }) => {
   const onShowEditClose = () => setShowEdit(false);
 
   const handleDelete = (event) => {
-    onDel(index);
+    onDel({ id: item.id, idx: index });
   };
 
   const handleEditedTask = (editedTask) => {

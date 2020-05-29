@@ -94,7 +94,7 @@ const TaskForm = ({ show, onClose, submit, edit, item }) => {
         })
         .catch((err) => {
           alert(
-            "failed to create task, your board might be unsync with our database"
+            "failed to create task, your board might be not in sync with our database"
           );
           submit({ title, content });
         });

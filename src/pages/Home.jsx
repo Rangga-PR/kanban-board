@@ -155,10 +155,22 @@ const Home = ({ userChange }) => {
     );
   };
 
-  const deleteItem = (itemIdx) => {
+  const deleteItem = (item) => {
+    const userId = localStorage.getItem("user_id");
+
+    if (userId) {
+      axios
+        .delete(`https://cryptic-hamlet-96074.herokuapp.com/task/${item.id}`)
+        .catch((err) => {
+          alert(
+            "delete failed, your board might not in sync with our database"
+          );
+        });
+    }
+
     setItems(
       update(items, {
-        $splice: [[itemIdx, 1]],
+        $splice: [[item.idx, 1]],
       })
     );
   };
