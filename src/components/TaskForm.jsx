@@ -108,7 +108,29 @@ const TaskForm = ({ show, onClose, submit, edit, item }) => {
   };
 
   const handleEdit = (event) => {
-    edit({ title, content });
+    const userId = localStorage.getItem("user_id");
+    if (userId) {
+      Axios.patch(
+        `https://cryptic-hamlet-96074.herokuapp.com/task/${item.id}`,
+        {
+          title,
+          content,
+          icon: item.icon,
+          status: item.status,
+        }
+      )
+        .then((res) => {
+          edit({ title, content });
+        })
+        .catch((err) => {
+          alert(
+            "edit failed your board might not be in sync with our database"
+          );
+          edit({ title, content });
+        });
+    } else {
+      edit({ title, content });
+    }
     onClose();
   };
 

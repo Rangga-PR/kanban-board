@@ -98,6 +98,21 @@ const Home = ({ userChange }) => {
   const onDrop = (item, _, status) => {
     const mapping = statuses.find((si) => si.status === status);
 
+    if (userId) {
+      axios
+        .patch(`https://cryptic-hamlet-96074.herokuapp.com/task/${item.id}`, {
+          title: item.title,
+          content: item.content,
+          icon: mapping.icon,
+          status: status,
+        })
+        .catch((err) =>
+          alert(
+            "failed to update task status, your board might not in sync with our database"
+          )
+        );
+    }
+
     if (item.status !== status)
       setItems((prevState) => {
         const newItems = prevState
@@ -161,8 +176,6 @@ const Home = ({ userChange }) => {
   };
 
   const deleteItem = (item) => {
-    const userId = localStorage.getItem("user_id");
-
     if (userId) {
       axios
         .delete(`https://cryptic-hamlet-96074.herokuapp.com/task/${item.id}`)
