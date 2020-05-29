@@ -130,7 +130,22 @@ const Home = ({ userChange }) => {
   const onCloseSignUp = () => setShowSignUp(false);
 
   const createTask = (taskDesc) => {
-    const taskmetaData = { id: items.length + 1, icon: "⭕️", status: "to do" };
+    let taskmetaData = {};
+
+    if (!taskDesc.id) {
+      taskmetaData = {
+        id: items.length + 1,
+        icon: "⭕️",
+        status: "to do",
+      };
+    } else {
+      taskmetaData = {
+        id: taskDesc.id,
+        icon: "⭕️",
+        status: "to do",
+      };
+    }
+
     const newTask = { ...taskDesc, ...taskmetaData };
 
     setItems(

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import { colors } from "../styles/variable";
+import Axios from "axios";
 
 Modal.setAppElement("#root");
 
@@ -79,7 +80,28 @@ const TaskForm = ({ show, onClose, submit, edit, item }) => {
   };
 
   const handleSubmit = (event) => {
-    submit({ title, content });
+    const userId = localStorage.getItem("user_id");
+    if (userId) {
+      Axios.post(`https://cryptic-hamlet-96074.herokuapp.com/task`, {
+        user_id: userId,
+        title,
+        content,
+        icon: "⭕️",
+        status: "to do",
+      })
+        .then((res) => {
+          submit({ title, content, id: res.data.result.newTaskID });
+        })
+        .catch((err) => {
+          alert(
+            "failed to create task, your board might be unsync with our database"
+          );
+          submit({ title, content });
+        });
+    } else {
+      submit({ title, content });
+    }
+
     setTitle("");
     setContent("");
     onClose();
