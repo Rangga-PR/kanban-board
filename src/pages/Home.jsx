@@ -79,7 +79,7 @@ const Home = ({ userChange }) => {
   const getUserTasks = () => {
     axios
       .get(
-        `https://cryptic-hamlet-96074.herokuapp.com/task/${localStorage.getItem(
+        `${process.env.REACT_APP_API_URI}/task/${localStorage.getItem(
           "user_id"
         )}`
       )
@@ -100,7 +100,7 @@ const Home = ({ userChange }) => {
 
     if (userId) {
       axios
-        .patch(`https://cryptic-hamlet-96074.herokuapp.com/task/${item.id}`, {
+        .patch(`${process.env.REACT_APP_API_URI}/task/${item.id}`, {
           title: item.title,
           content: item.content,
           icon: mapping.icon,
@@ -178,7 +178,7 @@ const Home = ({ userChange }) => {
   const deleteItem = (item) => {
     if (userId) {
       axios
-        .delete(`https://cryptic-hamlet-96074.herokuapp.com/task/${item.id}`)
+        .delete(`${process.env.REACT_APP_API_URI}/task/${item.id}`)
         .catch((err) => {
           alert(
             "delete failed, your board might not in sync with our database"

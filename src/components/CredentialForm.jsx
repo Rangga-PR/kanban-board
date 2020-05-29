@@ -73,7 +73,7 @@ const CredentialForm = ({ show, onClose, submit, signIn }) => {
 
   const handleSignIn = () => {
     axios
-      .post("https://cryptic-hamlet-96074.herokuapp.com/signin", null, {
+      .post(process.env.REACT_APP_API_URI + "/signin", null, {
         params: {
           username,
           password,
@@ -90,13 +90,13 @@ const CredentialForm = ({ show, onClose, submit, signIn }) => {
         onClose();
       })
       .catch((err) => {
-        alert("failed to sign up");
+        alert(`failed to sign in, ${err.response.data.error}`);
       });
   };
 
   const handleSignUp = () => {
     axios
-      .post("https://cryptic-hamlet-96074.herokuapp.com/signup", {
+      .post(process.env.REACT_APP_API_URI + "/signup", {
         username,
         password,
       })
@@ -111,7 +111,7 @@ const CredentialForm = ({ show, onClose, submit, signIn }) => {
         onClose();
       })
       .catch((err) => {
-        alert("failed to sign up");
+        alert(`failed to sign up, ${err.response.data.error}`);
       });
   };
 

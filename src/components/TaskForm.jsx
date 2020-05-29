@@ -82,7 +82,7 @@ const TaskForm = ({ show, onClose, submit, edit, item }) => {
   const handleSubmit = (event) => {
     const userId = localStorage.getItem("user_id");
     if (userId) {
-      Axios.post(`https://cryptic-hamlet-96074.herokuapp.com/task`, {
+      Axios.post(`${process.env.REACT_APP_API_URI}/task`, {
         user_id: userId,
         title,
         content,
@@ -110,15 +110,12 @@ const TaskForm = ({ show, onClose, submit, edit, item }) => {
   const handleEdit = (event) => {
     const userId = localStorage.getItem("user_id");
     if (userId) {
-      Axios.patch(
-        `https://cryptic-hamlet-96074.herokuapp.com/task/${item.id}`,
-        {
-          title,
-          content,
-          icon: item.icon,
-          status: item.status,
-        }
-      )
+      Axios.patch(`${process.env.REACT_APP_API_URI}/task/${item.id}`, {
+        title,
+        content,
+        icon: item.icon,
+        status: item.status,
+      })
         .then((res) => {
           edit({ title, content });
         })
